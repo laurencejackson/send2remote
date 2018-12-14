@@ -20,20 +20,20 @@ What the function does:
 
 Edit ssh_default.mat to match your unique setup.
 
-*USERNAME: Change to your username on remote machine
-*PASSWORD: Change to your password on remote machine
-*sshhost: Name of machine used to connect via ssh
-*matlabRunCmd: the command used to start matlab, point to your matlab install path (best to keep the startup flags in example)
+* USERNAME: Change to your username on remote machine
+* PASSWORD: Change to your password on remote machine
+* sshhost: Name of machine used to connect via ssh
+* matlabRunCmd: the command used to start matlab, point to your matlab install path (best to keep the startup flags in example)
 
 Before running send2remote store make sure the necessary variables are saved in a matlab structure with the correct names.
 
 e.g.  for some function sorting_script_parfor.m that uses a parfor to speed up processing [sorting_script_parfor(img,vox,sigma,order)]
 
-  structtemp.img = img;
-  structtemp.vox = vox;
-  structtemp.sigma = sigma;
-  structtemp.order = order;
-  [output] = send2remote('sorting_script_parfor',structtemp,'ssh','ssh_machine_name');
+  structtemp.img = img;  
+  structtemp.vox = vox;  
+  structtemp.sigma = sigma;  
+  structtemp.order = order;  
+  [output] = send2remote('sorting_script_parfor',structtemp,'ssh','ssh_machine_name');  
                     
 
 ### Installing
