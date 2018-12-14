@@ -1,4 +1,4 @@
-function [return_data] = send2remote(localfunc,struct)
+function [return_data] = send2remote(localfunc,struct,varargin)
 %% Laurence Jackson, BME, KCL, 2018
 % 
 % Code for exporting local code and workspace data to remote system and returning
@@ -22,8 +22,16 @@ function [return_data] = send2remote(localfunc,struct)
 tic
 
 % SSH/SCP bits
-load('ssh_beastie02.mat'); % mat file with sshhost,USERNAME,PASSWORD and matlabRunCmd
-% load('ssh_gpubeastie01-pc.mat'); % mat file with sshhost,USERNAME,PASSWORD and matlabRunCmd
+if nargin > 2
+    for vi = 1:length(nargin)
+        if strcmpi(varargin{vi}, 'ssh')
+            load(varargin{vi+1})
+        end
+    end
+else
+    load('ssh_default.mat'); 
+    warning('Using defaul SSH profile - make sure this has been edited to match your configuration')
+end
 
 disp(['Running ' localfunc ' remotely on ' sshhost]);
 % save data struct
@@ -44,12 +52,12 @@ files = unique(files);
 disp('    --sending code');
 ssh2_simple_command(sshhost,USERNAME,PASSWORD,'mkdir -p TEMP_remote'); % create remote dirs
 remotePath = '~/TEMP_remote';
+
 % send files
 for fl = 1:length(files)
     [ahhh_tmp, mFileName_tmp, dontcare_tmp] = fileparts(files{fl});
     at_loc = strfind(files(fl),'@');
     if ~isempty(cell2mat(at_loc))
-        % remotePath = ['~/TEMP_remote/',atfolder(fl)];
         remotePath = ['~/TEMP_remote/',ahhh_tmp(cell2mat(at_loc):end)];
         % Make a new directory for this class method.
         ssh2_simple_command(sshhost,USERNAME,PASSWORD,sprintf('mkdir -p TEMP_remote/%s',ahhh_tmp(cell2mat(at_loc):end))); % create remote dirs
