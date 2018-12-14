@@ -30,6 +30,7 @@ if nargin > 2
     end
 else
     load('ssh_default.mat'); 
+    warning('Using defaul SSH profile - make sure this has been edited to match your configuration')
 end
 
 disp(['Running ' localfunc ' remotely on ' sshhost]);
