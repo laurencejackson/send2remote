@@ -27,6 +27,7 @@ Edit ssh_default.mat to match your unique setup.
 
 Before running send2remote store make sure the necessary variables are saved in a matlab structure with the correct names.
 
+~~~~
 e.g.  for some function sorting_script_parfor.m that uses a parfor to speed up processing [sorting_script_parfor(img,vox,sigma,order)]
 
   structtemp.img = img;  
@@ -34,7 +35,7 @@ e.g.  for some function sorting_script_parfor.m that uses a parfor to speed up p
   structtemp.sigma = sigma;  
   structtemp.order = order;  
   [output] = send2remote('sorting_script_parfor',structtemp,'ssh','ssh_machine_name');  
-                    
+~~~~              
 
 ### Installing
 
